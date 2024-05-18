@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Box } from '@/components/ui/box';
-import { useSession } from '../../../ctx';
+import { useSession } from '../../../utils/ctx';
 import { useRouter } from 'expo-router';
 import { VStack } from '@/components/ui/vstack';
 import { Divider } from '@/components/ui/divider';
 import { HStack } from '@/components/ui/hstack';
 import { CheckIcon, Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
-import axios from 'axios';
 import { Button, ButtonText, ButtonIcon } from '@/components/ui/button';
 import {
   Checkbox,
@@ -19,8 +18,7 @@ import { Image } from '@/components/ui/image';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
-import { Toast, useToast, ToastTitle } from '@/components/ui/toast';
-import { LinkText, Link } from '@/components/ui/link';
+import { Link } from '@/components/ui/link';
 import {
   FormControl,
   FormControlError,
@@ -60,7 +58,7 @@ const signInSchema = z.object({
 
 type SignInSchemaType = z.infer<typeof signInSchema>;
 
-const SignInForm = ({email, setEmail}) => {
+const SignInForm = () => {
   const {
     control,
     formState: { errors },
@@ -69,33 +67,19 @@ const SignInForm = ({email, setEmail}) => {
   } = useForm<SignInSchemaType>({
     resolver: zodResolver(signInSchema),
   });
-  const [isEmailFocused, setIsEmailFocused] = useState(false);
-  const { signIn, jwt } = useSession();
-  // const toast = useToast();
+  const { signIn } = useSession();
+
   const router = useRouter();
   const onSubmit = (_data: SignInSchemaType) => {
     loginAxios({email: _data.email, password: _data.password}).then((res) => {
       if (res) {
-        console.log("resresresresres", res);
-        setEmail(res.data.user.email);
         signIn(res.token);
         router.push('/contacts');
       } 
  
     });
 
-    // toast.show({
-    //   placement: 'bottom right',
-    //   render: ({ id }) => {
-    //     return (
-    //       <Toast nativeID={id} variant="accent" action="success">
-    //         <ToastTitle>Signed in successfully</ToastTitle>
-    //       </Toast>
-    //     );
-    //   },
-    // });
     reset();
-    // Implement your own onSubmit and navigation logic here.
   };
 
   const handleKeyPress = () => {
@@ -115,7 +99,7 @@ const SignInForm = ({email, setEmail}) => {
     <>
       <VStack className="justify-between">
         <FormControl
-          isInvalid={(!!errors.email || isEmailFocused) && !!errors.email}
+          isInvalid={!!errors.email}
           isRequired={true}
         >
           <Controller
@@ -284,11 +268,7 @@ function MobileHeader() {
 }
 
 const Main = () => {
-  const [eur, setEur] = useState(0);
-
-  axios.get('http://api.coindesk.com/v1/bpi/currentprice.json').then((res) => setEur(res.data.bpi.EUR.rate_float));
-const [email, setEmail] = useState('');
-  return (
+    return (
     <>
       <Box className="md:hidden">
         <MobileHeader />
@@ -297,13 +277,7 @@ const [email, setEmail] = useState('');
         className="px-4 md:px-8  bg-background-0
             dark:bg-background-50 py-8 flex-1 justify-between"
       >
-        <Heading className="mb-8 md:flex md:text-2xl hidden">
-          Sign in to continue {email}
-        </Heading>
-        <Text>
-          1 BTC = {eur} EUR
-        </Text>
-        <SignInForm email={email} setEmail={setEmail}/>
+        <SignInForm />
         <HStack space="md" className="my-4 items-center justify-center">
           <Divider className="w-2/6 bg-background-200 dark:bg-background-700" />
           <Text className="font-medium color-typography-400 dark:color-typography-300">

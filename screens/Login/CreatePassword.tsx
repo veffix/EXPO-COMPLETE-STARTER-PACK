@@ -9,7 +9,6 @@ import { Image } from '@/components/ui/image';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { Input,InputField ,InputIcon,InputSlot} from '@/components/ui/input';
-import { Toast,useToast,ToastTitle } from '@/components/ui/toast';
 import { 
   FormControl,
   FormControlError,
@@ -62,36 +61,11 @@ export default function CreatePassword() {
     resolver: zodResolver(createPasswordSchema),
   });
 
-  // const toast = useToast();
-
   const onSubmit = (data: CreatePasswordSchemaType) => {
     if (data.password === data.confirmpassword) {
-      // toast.show({
-      //   placement: 'bottom right',
-      //   render: ({ id }) => {
-      //     return (
-      //       <Toast nativeID={id} variant="accent" action="success">
-      //         <ToastTitle>Password updated successfully</ToastTitle>
-      //       </Toast>
-      //     );
-      //   },
-      // });
-
-      // Navigate screen to appropriate location
       router.replace('/');
 
       reset();
-    } else {
-      // toast.show({
-      //   placement: 'bottom right',
-      //   render: ({ id }) => {
-      //     return (
-      //       <Toast nativeID={id} variant="accent" action="error">
-      //         <ToastTitle>Passwords do not match</ToastTitle>
-      //       </Toast>
-      //     );
-      //   },
-      // });
     }
   };
 

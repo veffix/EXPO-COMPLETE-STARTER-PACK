@@ -1,5 +1,13 @@
 {
     "extends": ["@react-native-community", "prettier"],
+    "overrides": [
+      {
+        "files": ["./.expo/metro/externals/console/index.js"],
+        "rules": {
+          "no-undef": "off"
+        }
+      }
+    ],
     "rules": {
       "prettier/prettier": [
         "error",
@@ -13,7 +21,8 @@
       ],
       "no-bitwise": 0,
       "prefer-const": "warn",
-      "no-console": ["error", { "allow": ["warn", "error"] }]
+      "no-console": ["error", { "allow": ["warn", "error"] }],
+      "@typescript-eslint/no-explicit-any": "off"
     },
     "parserOptions": {
       "parser": "@babel/eslint-parser",

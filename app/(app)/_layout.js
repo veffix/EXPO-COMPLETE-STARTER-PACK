@@ -1,6 +1,7 @@
+import React from 'react';
 import { Redirect, Stack } from 'expo-router';
 import { Text } from '@/components/ui/text';
-import { useSession } from '../../ctx';
+import { useSession } from '../../utils/ctx';
 
 export default function AppLayout() {
   const { jwt, isLoading } = useSession();

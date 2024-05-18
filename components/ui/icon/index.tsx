@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { createIcon } from '@gluestack-ui/icon';
 import { Path, Svg } from 'react-native-svg';

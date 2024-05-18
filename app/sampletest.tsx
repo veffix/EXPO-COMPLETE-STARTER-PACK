@@ -1,3 +1,4 @@
+import React from 'react';
 import GuestLayout from '../layouts/GuestLayout';
 import { Center, Box, Text } from '@gluestack-ui/themed';
 

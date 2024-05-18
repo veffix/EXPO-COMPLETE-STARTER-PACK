@@ -1,14 +1,12 @@
+import React from 'react';
 import '../global.css';
-import { useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack, Slot, Redirect } from 'expo-router';
+import { SplashScreen, Slot } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'nativewind';
 import { GluestackUIProvider as NativewindProvider } from '@/components/ui/gluestack-ui-provider';
-import { AuthProvider } from '../utils/AuthContext';
-import ProtectedRoute from '../utils/ProtectedRoute';
-import { SessionProvider } from '../ctx';
+import { SessionProvider } from '../utils/ctx';
 
 
 export {
@@ -48,7 +46,7 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const { colorScheme, toggleColorScheme } = useColorScheme();
+  const { colorScheme, /* toggleColorScheme */ } = useColorScheme();
   
   return (
     <SessionProvider>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Text } from '@/components/ui/text';
-import { useSession } from '../../ctx'; // Ensure this path is correct based on your project structure
+import { useSession } from '../../utils/ctx'; // Ensure this path is correct based on your project structure
 
 export default function Index() {
   const { signOut } = useSession();

@@ -11,7 +11,6 @@ import { Divider } from '@/components/ui/divider';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { Input,InputField ,InputIcon,InputSlot} from '@/components/ui/input';
-import { Toast,useToast,ToastTitle } from '@/components/ui/toast';
 import { Checkbox,CheckboxIcon,CheckboxIndicator,CheckboxLabel } from '@/components/ui/checkbox';
 import { 
   FormControl,
@@ -112,47 +111,19 @@ const SignUpForm = () => {
   } = useForm<SignUpSchemaType>({
     resolver: zodResolver(signUpSchema),
   });
-  const [isEmailFocused, setIsEmailFocused] = useState(false);
-  const [pwMatched, setPwMatched] = useState(false);
-  // const toast = useToast();
 
   const onSubmit = (_data: SignUpSchemaType) => {
     if (_data.password === _data.confirmpassword) {
-      setPwMatched(true);
       register({email: _data.email, password: _data.password, passwordConfirm: _data.confirmpassword}).then((res) => {
         if (res) {
-          console.log(res);
+          router.replace('/login');
           alert('sign up');
         } else {
           alert('sign up failed');
         }
       });
-      // toast.show({
-      //   placement: 'bottom right',
-      //   render: ({ id }) => {
-      //     return (
-      //       <Toast nativeID={id} variant="accent" action="success">
-      //         <ToastTitle>Signed up successfully</ToastTitle>
-      //       </Toast>
-      //     );
-      //   },
-      // });
       reset();
-    } else {
-      // toast.show({
-      //   placement: 'bottom right',
-      //   render: ({ id }) => {
-      //     return (
-      //       <Toast nativeID={id} action="error">
-      //         <ToastTitle>Passwords do not match</ToastTitle>
-      //       </Toast>
-      //     );
-      //   },
-      // });
     }
-    // Implement your own onSubmit and navigation logic here.
-    // Navigate to appropriate location
-    router.replace('/login');
   };
 
   const handleKeyPress = () => {
@@ -176,7 +147,7 @@ const SignUpForm = () => {
     <>
       <VStack className="justify-between">
         <FormControl
-          isInvalid={(!!errors.email || isEmailFocused) && !!errors.email}
+          isInvalid={!!errors.email}
           isRequired={true}
         >
           <Controller

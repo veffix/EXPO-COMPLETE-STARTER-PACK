@@ -1,8 +1,9 @@
+import React from "react";
 import "../global.css";
 import { Redirect } from 'expo-router';
 import { Text } from '@/components/ui/text';
 import LoginScreen from "../screens/Login/signIn";
-import { useSession } from '../ctx';
+import { useSession } from '../utils/ctx';
 
 export default function Home() {
   const { jwt, isLoading } = useSession();

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useMemo, useContext } from 'react';
 import {
   Table as ExpoTable,
