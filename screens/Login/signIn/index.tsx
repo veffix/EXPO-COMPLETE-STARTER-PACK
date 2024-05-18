@@ -18,7 +18,7 @@ import { Image } from '@/components/ui/image';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
-import { Link } from '@/components/ui/link';
+import { Link, LinkText } from '@/components/ui/link';
 import {
   FormControl,
   FormControlError,
@@ -305,7 +305,7 @@ const Main = () => {
             Don't have an account?
           </Text>
           <StyledExpoRouterLink href="/signup">
-        {/*     <LinkText className="text-sm">Sign up</LinkText> */}
+             <LinkText className="text-sm">Sign up</LinkText>
           </StyledExpoRouterLink>
         </HStack>
       </Box>

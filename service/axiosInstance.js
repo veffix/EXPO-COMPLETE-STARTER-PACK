@@ -1,17 +1,33 @@
 import axios from 'axios';
-import { useRouter } from 'expo-router'; // Correct import for useRouter from expo-router
+import { useRouter } from 'expo-router';
 import { Alert, Platform } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 
 // Determine the base URL based on the platform
-const url = Platform.OS === 'web' ? "localhost" : "172.18.0.1";
+const url = Platform.OS === 'web' ? "localhost" : "192.168.1.72";
 
 // Create an instance of Axios
 const axiosInstance = axios.create({
-    baseURL: `http://${url}:8080`, // Replace with your API URL
+    baseURL: `http://192.168.1.72:8080`, // Replace with your API URL
     headers: {
-        'Content-Type': 'application/json',
-        "authorization": "Bearer " + localStorage.getItem("jwt")
+        'Content-Type': 'application/json'
     }
+});
+
+// Add a request interceptor
+axiosInstance.interceptors.request.use(async req => {
+  let jwt;
+  if (Platform.OS === 'web') {
+    jwt = localStorage.getItem('jwt');
+  } else {
+    jwt = await SecureStore.getItemAsync('jwt');
+  }
+
+  req.headers.Authorization = `Bearer ${jwt}`;
+
+  return req;
+}, error => {
+  return Promise.reject(error);
 });
 
 // Add a response interceptor

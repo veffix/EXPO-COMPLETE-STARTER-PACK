@@ -4,16 +4,12 @@ import { Box } from '@/components/ui/box';
 import { Text } from '@/components/ui/text';
 import { HStack } from "@/components/ui/hstack"
 import { Input, InputField } from '@/components/ui/input';
-import { StyleSheet, View, ScrollView } from 'react-native';
-import { useForm, Controller, set } from 'react-hook-form';
-import { z } from 'zod';
-import { Keyboard } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Heading } from '@/components/ui/heading';
 import debounce from 'lodash.debounce';
-import { useToast, Toast } from "@/components/ui/toast"
 import { Center } from '@/components/ui/center';
-
+import { useSession } from '@/utils/ctx';
 import {
     Table,
     TableHeader,
@@ -22,10 +18,10 @@ import {
     TableHead,
     TableData,
     TableRow,
-    TableCaption,
   } from "@/components/ui/table"
 
 const Contacts = () => {    
+  const { signOut } = useSession();
     const [contacts, setContacts] = useState([]); // [1
     const [email, setEmail] = useState('');
     const [firstname, setFirstname] = useState('');
@@ -33,7 +29,7 @@ const Contacts = () => {
     const [searchApi, setSearchApi] = useState('');
     const [pagination, setPagination] = useState({totalPage: 1, limit: 5});
     const [page, setPage] = useState(1);
-console.log('page', page)
+
     const handleSearchApi = useCallback(debounce((searchProps) => {
         console.log('searchProps', searchProps);
         setSearchApi(searchProps);
@@ -67,11 +63,18 @@ console.log('page', page)
             
         });
     }
-    console.log('contacts', contacts);
     return (
         <Center className="w-full">
        <ScrollView className='max-w-[1100px] w-full'>
-       
+       <Text
+        onPress={() => {
+          // The `app/(app)/_layout.tsx` will redirect to the sign-in screen.
+          signOut();
+        }}
+        style={{ color: 'blue', fontSize: 18 }} // Adding some styles for better visibility
+      >
+        Sign Out
+      </Text>
             <Heading className="mt-10 text-center">Liste des contacts</Heading>
             
 <Center>
